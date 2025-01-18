@@ -1,48 +1,33 @@
 <h1 align="center">
-  <b>V3 branch</b> | Summer Release V2
+  Winter Release V3
 </h1>
 
 [Telegram](https://t.me/save_restricted_content_bots) | [See Recent Updates](https://github.com/devgaganin/Save-Restricted-Content-Bot-V2/tree/v3#updates)
 
-
+### Star the repo it motivate us to update new features
+see our live bot kn telegram to check the features [Advance Content Saver Bot](https://t.me/advance_content_saver_bot)
 
 ## 📚 About This Branch
-This branch is based on `Pyrogram V2` offering enhanced stability and a forced login feature. Users must log in to use the bot. For no-login usage, consider the `v4` branch.
-
-### ⚠️ Must Do: Secure Your Sensitive Variables
-
-**Do not expose sensitive variables (e.g., `API_ID`, `API_HASH`, `BOT_TOKEN`) on GitHub. Use environment variables to keep them secure.**
-
-### Configuring Variables Securely:
-
-- **On VPS or Local Machine:**
-  - Use a text editor to edit `config.py`:
-    ```bash
-    nano config.py
-    ```
-  - Alternatively, export as environment variables:
-    ```bash
-    export API_ID=your_api_id
-    export API_HASH=your_api_hash
-    export BOT_TOKEN=your_bot_token
-    ```
-
-- **For Cloud Platforms (Heroku, Railway, etc.):**
-  - Set environment variables directly in your platform’s dashboard.
-
-- **Using `.env` File:**
-  - Create a `.env` file and add your credentials:
-    ```
-    API_ID=your_api_id
-    API_HASH=your_api_hash
-    BOT_TOKEN=your_bot_token
-    ```
-  - Make sure to add `.env` to `.gitignore` to prevent it from being pushed to GitHub.
-
-**Why This is Important?**
-Your credentials can be stolen if pushed to a public repository. Always keep them secure by using environment variables or local configuration files.
+- This branch is based on `Pyrogram V2` offering enhanced stability and a forced login feature. User are not forced to login in bot for public channels but for public groups and private channel they have to do login.
+- for detailed features scroll down to features section
 
 ---
+
+## 🔧 Features
+- Extract content from both public and private channels/groups.
+- Rename and forward content to other channels or users.
+- Custom captions and thumbnails.
+- Auto-remove default video thumbnails.
+- Delete or replace words in filenames and captions.
+- Auto-pin messages if enabled.
+- download yt/insta/Twitter/fb ect normal ytdlp supported sites that supports best format
+- Login via phone number.
+- **Supports 4GB file uploads**: The bot can handle large file uploads, up to 4GB in size.
+- **Enhanced Timer**: Distinct timers for free and paid users to limit usage and improve service.
+- **Improved Looping**: Optimized looping for processing multiple files or links, reducing delays and enhancing performance.
+- **Premium Access**: Premium users enjoy faster processing speeds and priority queue management.
+- ads setup shorlink ads token system
+- fast uploader via `SpyLib` using Telethon modules and `mautrix bridge repo`
 
 ## ⚡ Commands
 
@@ -69,21 +54,7 @@ Your credentials can be stolen if pushed to a public repository. Always keep the
 - **`help`**: ❓ Help if you're new.
 - **`cancel`**: 🚫 Cancel batch process.
 
-## 🔧 Features
-- Extract content from both public and private channels/groups.
-- Rename and forward content to other channels or users.
-- Custom captions and thumbnails.
-- Auto-remove default video thumbnails.
-- Delete or replace words in filenames and captions.
-- Auto-pin messages if enabled.
-- download yt/insta normal ytdlp supported sites that supports best format
-- Login via phone number.
-- **Supports 4GB file uploads**: The bot can handle large file uploads, up to 4GB in size.
-- **Enhanced Timer**: Distinct timers for free and paid users to limit usage and improve service.
-- **Improved Looping**: Optimized looping for processing multiple files or links, reducing delays and enhancing performance.
-- **Premium Access**: Premium users enjoy faster processing speeds and priority queue management.
 
----
 ## ⚙️ Required Variables
 
 <details>
@@ -176,6 +147,40 @@ To run the bot, you'll need to configure a few sensitive variables. Here's how t
 </details>
 
 ---
+### ⚠️ Must Do: Secure Your Sensitive Variables
+
+**Do not expose sensitive variables (e.g., `API_ID`, `API_HASH`, `BOT_TOKEN`) on GitHub. Use environment variables to keep them secure.**
+
+### Configuring Variables Securely:
+
+- **On VPS or Local Machine:**
+  - Use a text editor to edit `config.py`:
+    ```bash
+    nano config.py
+    ```
+  - Alternatively, export as environment variables:
+    ```bash
+    export API_ID=your_api_id
+    export API_HASH=your_api_hash
+    export BOT_TOKEN=your_bot_token
+    ```
+
+- **For Cloud Platforms (Heroku, Railway, etc.):**
+  - Set environment variables directly in your platform’s dashboard.
+
+- **Using `.env` File:**
+  - Create a `.env` file and add your credentials:
+    ```
+    API_ID=your_api_id
+    API_HASH=your_api_hash
+    BOT_TOKEN=your_bot_token
+    ```
+  - Make sure to add `.env` to `.gitignore` to prevent it from being pushed to GitHub.
+
+**Why This is Important?**
+Your credentials can be stolen if pushed to a public repository. Always keep them secure by using environment variables or local configuration files.
+
+---
 
 ## Updates
 <details>
@@ -184,7 +189,7 @@ To run the bot, you'll need to configure a few sensitive variables. Here's how t
 - Fixed blocking and stopping of bot
 - Fixed public topic or not topic group extraction (no need of formatting link) login required
 - added upload method for public group also
-- added `freez` command to remove the expired user with summary (auto removal of funtion depreciated)
+- added `freez` command to remove the expired user with summary (auto removal of funtion is added but still if you want to execute)
 - rest explore the updates
 </details>
 
@@ -325,7 +330,7 @@ Visit the [Terms of Use](https://github.com/devgaganin/Save-Restricted-Content-B
 
 **Note**: Changing the terms and commands doesn't magically make you a developer. Real development involves understanding the code, writing new functionalities, and debugging issues, not just renaming things. If only it were that easy!
 
-## Contributers
-My group members contact... Join @save_restricted_content_bots to know them.
+### Special thanks to:
+- [King of Patal](https://github.com/alreadydea) for base development of this repository.
+- [Mautrix Bridge](https://github.com/mautrix/telegram) for fast uploader connectivity bridge.
 
-Thanks!
