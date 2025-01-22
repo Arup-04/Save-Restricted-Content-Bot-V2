@@ -246,13 +246,25 @@ async def get_msg(userbot, sender, edit_id, msg_link, i, message):
               if file_size and file_size > size_limit and (freecheck == 1 and not verified):
                 await edit.edit("**__❌ File size is greater than 2 GB, purchase premium to proceed or use /token to get 3 hour access for free__")
                 return
-
+                  
+            file_name = None
+            if msg.document:
+                file_name = msg.document.file_name
+            elif msg.video:
+                file_name = msg.video.file_name
+            elif msg.photo:
+                file_name = "photo.jpg"  # Default name for photos
+            if file_name:
+                file_name = await sanitize(file_name)
+    
             edit = await app.edit_message_text(sender, edit_id, "Trying to Download...")
             file = await userbot.download_media(
                 msg,
+                file_name=file_name,
                 progress=progress_bar,
                 progress_args=("╭─────────────────────╮\n│      **__Downloading__...**\n├─────────────────────",edit,time.time()))
-          
+            
+            
             last_dot_index = str(file).rfind('.')
             if last_dot_index != -1 and last_dot_index != 0:
                 ggn_ext = str(file)[last_dot_index + 1:]
@@ -269,7 +281,7 @@ async def get_msg(userbot, sender, edit_id, msg_link, i, message):
             else:
                 original_file_name = str(file)
                 file_extension = 'mp4'
-              
+                
             for word in delete_words:
                 original_file_name = original_file_name.replace(word, "")
             video_file_name = original_file_name + " " + custom_rename_tag
@@ -292,6 +304,7 @@ async def get_msg(userbot, sender, edit_id, msg_link, i, message):
                 caption = f"{final_caption}\n\n__**{custom_caption}**__" if custom_caption else f"{final_caption}"
                 await handle_large_file(file, sender, edit, caption)
                 return
+            target_chat_id = user_chat_ids.get(sender, sender)
             if msg.voice:
                 result = await app.send_voice(target_chat_id, file)
                 await result.copy(LOG_GROUP)
@@ -383,8 +396,19 @@ async def copy_message_with_chat_id(app, userbot, sender, chat_id, message_id, e
             caption = f"{final_caption}\n\n__**{custom_caption}**__" if custom_caption else final_caption
             custom_rename_tag = get_user_rename_preference(sender)
             if msg.media:
+                file_name = None
+                if msg.document:
+                    file_name = msg.document.file_name
+                elif msg.video:
+                    file_name = msg.video.file_name
+                elif msg.photo:
+                    file_name = "photo.jpg"  # Default name for photos
+                if file_name:
+                    file_name = await sanitize(file_name)
+    
                 file = await userbot.download_media(
                     msg,
+                    file_name=file_name,
                     progress=progress_bar,
                     progress_args=("╭─────────────────────╮\n│     **__Topic Group Downloader...__**\n├─────────────────────", edit, time.time()),
                 )
@@ -915,3 +939,14 @@ async def is_file_size_exceeding(file_path, size_limit):
     except Exception as e:
         print(f"Error while checking file size: {e}")
         return False
+
+
+async def sanitize(file_name: str) -> str:
+    """
+    Asynchronously sanitizes a filename by removing or replacing invalid characters.
+    """
+    # Replace invalid characters (e.g., '/', '\', ':', '*', '?', '"', '<', '>', '|') with an underscore
+    sanitized_name = re.sub(r'[\\/:"*?<>|]', '_', file_name)
+    # Strip leading/trailing whitespaces
+    return sanitized_name.strip()
+    
