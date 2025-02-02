@@ -171,7 +171,8 @@ async def get_msg(userbot, sender, edit_id, msg_link, i, message):
         chat, msg_id = None, None
         saved_channel_ids = load_saved_channel_ids()
         size_limit = 2 * 1024 * 1024 * 1024  # 1.99 GB size limit
-        
+        file = None
+        edit = None
         # Extract chat and message ID for valid Telegram links
         if 't.me/c/' in msg_link or 't.me/b/' in msg_link:
             parts = msg_link.split("/")
@@ -237,13 +238,10 @@ async def get_msg(userbot, sender, edit_id, msg_link, i, message):
 
         
         # Handle file media (photo, document, video)
-        file = None
         file_size = get_message_file_size(msg)
 
-        # Check file size limit
-        free_check = await chk_user(message, sender)
-        if file_size and file_size > size_limit and free_check == 1:
-            await app.edit_message_text(sender, edit_id, "**❌ File size exceeds 2GB. Upgrade to premium to proceed.**")
+        if file_size and file_size > size_limit and pro is None:
+            await app.edit_message_text(sender, edit_id, "**❌ 4GB Uploader not found**")
             return
 
         file_name = await get_media_filename(msg)
@@ -324,17 +322,17 @@ async def get_media_filename(msg):
     if msg.video:
         return msg.video.file_name if msg.video.file_name else "temp.mp4"
     if msg.photo:
-        return msg.photo.file_name if msg.photo.file_name else "temp.jpg"
+        return "temp.jpg"
     return "unknown_file"
 
-async def get_media_filename(msg):
+def get_message_file_size(msg):
     if msg.document:
-        return msg.document.file_name
-    if msg.video:
-        return msg.video.file_name
+        return msg.document.file_size
     if msg.photo:
-        return "photo.jpg"
-    return None
+        return msg.photo.file_size
+    if msg.video:
+        return msg.video.file_size
+    return 1
 
 async def get_final_caption(msg, sender):
     upload_method = await fetch_upload_method(sender)
