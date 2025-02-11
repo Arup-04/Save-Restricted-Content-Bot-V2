@@ -279,18 +279,29 @@ async def get_msg(userbot, sender, edit_id, msg_link, i, message):
             result = await app.send_audio(target_chat_id, file, caption=caption, reply_to_message_id=topic_id)
             await result.copy(LOG_GROUP)
             await edit.delete(2)
+            os.remove(file)
             return
         
         if msg.voice:
             result = await app.send_voice(target_chat_id, file, reply_to_message_id=topic_id)
             await result.copy(LOG_GROUP)
             await edit.delete(2)
+            os.remove(file)
+            return
+
+
+        if msg.video_note:
+            result = await app.send_video_note(target_chat_id, file, reply_to_message_id=topic_id)
+            await result.copy(LOG_GROUP)
+            await edit.delete(2)
+            os.remove(file)
             return
 
         if msg.photo:
             result = await app.send_photo(target_chat_id, file, caption=caption, reply_to_message_id=topic_id)
             await result.copy(LOG_GROUP)
             await edit.delete(2)
+            os.remove(file)
             return
 
         # Upload media
@@ -430,6 +441,10 @@ async def copy_message_with_chat_id(app, userbot, sender, chat_id, message_id, e
             msg = await userbot.get_messages(chat_id, message_id)
 
             if not msg or msg.service or msg.empty:
+                return
+
+            if msg.text:
+                await app.send_message(target_chat_id, msg.text.markdown, reply_to_message_id=topic_id)
                 return
 
             final_caption = format_caption(msg.caption.markdown if msg.caption else "", sender, custom_caption)
